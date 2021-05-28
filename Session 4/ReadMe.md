@@ -2,34 +2,73 @@
 
 ### **Group Members**             
 •	Sarthak Dargan – sarthak221995@gmail.com                
-•	CV Chiranthan - chiranthancv95@gmail.com                   
-•	Mayank Singhal - singhal.mayank77@gmail.com  [ Currently Affected with COVID 19 ]    
-• Jayasankar Raju S - muralis2raj@gmail.com  
+•	CV Chiranthan - chiranthancv95@gmail.com                      
+•   Jayasankar Raju S - muralis2raj@gmail.com  
 
+### Results
+Maximum Test Accuracy - 99.52%    
+Maximum Train Accuracy - 98.87%
 
 ## Part 1 - Back Propagation
-Link to Excel : https://docs.google.com/spreadsheets/d/1a6AN9F0QVc2iToQlo_pnjtil3GEFMty4rmZdRUvI-BY/edit?usp=sharing
-Link to Back Propagation Read Me: https://github.com/sarthak221995/TSAI_EVA6/blob/main/Session%204/ReadMe%20-%20%20Back%20Prop.md
+[Link to Excel ](https://docs.google.com/spreadsheets/d/1hnRYfjvfERfm-8LJoDuAjiWleu_ilXwP_pxCKBeswNk/edit#gid=0) 
 
-## Part 2 - MNIST DIGITS PYTORCH CLASSIFIER
-
-**Best solution Results** : Achieved 99.52% Accuracy on Test Data on 19th Epoch with Total Trainable Params: 19,834. 
-
-**Key Steps** : 
-1. We Started with augmenting the training data. We applied Random Rotations, Scaling, Shearing transformations.
-2. Created Train Loader and Test Loader
-3. Designed the Neural Network using Convolution layers/Max Pool/Dropouts/GAP/Batch Normalization/FC with Total Trainable Params:19,834
-4. Train and Test the Model
-
-**Data Augmentation:**
-
-![image](https://user-images.githubusercontent.com/11936036/120030179-c2805000-c014-11eb-8020-94fafc0c7503.png)
-
-**Neural Network Architecture:**
-
-![image](https://user-images.githubusercontent.com/11936036/120030398-0a9f7280-c015-11eb-9111-23668c2a68d0.png)
+[Link to Back Propagation Read Me](https://github.com/jai2shan/TSAI_EVA6/blob/main/Session%204/ReadMe%20-%20%20Back%20Prop.md) 
 
 
-Other Solutions 
+## Part 2 - CNN - MNIST
+[Link to Colab](https://colab.research.google.com/github/jai2shan/TSAI-EVA40-Assignments/blob/master/Session%209/Assignment_9_Step%203_updated%2010%20mins%20after%20asgnt%20submission.ipynb) 
 
-1. https://github.com/sarthak221995/TSAI_EVA6/blob/main/Session%204/Session_4_Less_than_20k_Parameters%20FC%209941.ipynb [ With No Data Augmentation: 99.41% Accuracy ]
+### Data Augmentations:
+RandomRotation and RandomAffine 
+
+Concatenated the train data twice one set with data augmentations and other without augmentations    
+
+    train_loader = torch.utils.data.DataLoader(
+        ConcatDataset([
+                    datasets.MNIST('../data', train=True, download=True,
+                        transform=transforms.Compose([
+                            transforms.ToTensor(),
+                            transforms.Normalize((0.1307,), (0.3081,))
+                        ])),
+                    datasets.MNIST('../data', train=True, download=True,
+                        transform=transforms.Compose([
+                            transforms.ToTensor(),
+                            transforms.RandomRotation(10),
+                            transforms.RandomAffine(degrees=10, shear=45),
+                            transforms.Normalize((0.1307,), (0.3081,))
+                        ])),
+        ]),batch_size=batch_size, shuffle=True, **kwargs) 
+
+
+### Model Summary : 
+![Model Summary](./images/NetworkSummary.png)
+
+### Optimizer and Learning Rate
+Used three learning rates based on accuracy
+
+    model =  Net().to(device)
+    optimizer1 = optim.SGD(model.parameters(), lr=0.05, momentum=0.9)
+    optimizer2 = optim.SGD(model.parameters(), lr=0.02, momentum=0.9)
+    optimizer3 = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
+    EPOCHS = 20
+    acc = 0
+    for epoch in range(EPOCHS):
+        print("EPOCH:", epoch)
+        if acc < 99.35:
+        train(model, device, train_loader, optimizer1, epoch)
+        acc = test(model, device, test_loader)
+        elif (acc>99.35) & (acc<99.42) :
+        train(model, device, train_loader, optimizer2, epoch)
+        acc = test(model, device, test_loader)
+        elif acc>99.42:
+        train(model, device, train_loader, optimizer3, epoch)
+        acc = test(model, device, test_loader)
+
+
+### Loss - Error Graph: 
+![Loss Error Plot](./images/LossErrorGraph.png)
+
+### Correct and Incorrect Predictions : 
+![Correct Predictions](./images/CorrectPredictions.png)
+
+![Incorrect Predictions](./images/WrongPredictions.png)
