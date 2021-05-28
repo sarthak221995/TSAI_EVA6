@@ -32,4 +32,4 @@ Link to Back Propagation Read Me: https://github.com/sarthak221995/TSAI_EVA6/blo
 
 Other Solutions 
 
-1. https://github.com/sarthak221995/TSAI_EVA6/blob/main/Session%204/Session_4_Less_than_20k_Parameters%20FC%209941.ipynb [ No Data Augmentation: 99.41% Accuracy ]
+1. https://github.com/sarthak221995/TSAI_EVA6/blob/main/Session%204/Session_4_Less_than_20k_Parameters%20FC%209941.ipynb [ With No Data Augmentation: 99.41% Accuracy ]
