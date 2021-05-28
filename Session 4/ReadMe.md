@@ -29,7 +29,6 @@ Link to Back Propagation Read Me: https://github.com/sarthak221995/TSAI_EVA6/blo
 
 ![image](https://user-images.githubusercontent.com/11936036/120030398-0a9f7280-c015-11eb-9111-23668c2a68d0.png)
 
-We tried several approaches. 
 
 Other Solutions 
 
